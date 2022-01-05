@@ -1,7 +1,7 @@
-## docker-compose-tutorial
+# docker-compose-tutorial
 Docker Compose tutorial for nodejs app and nginx reverse_proxy
 
-**1. NodeJS server**
+## NodeJS server
 
 Create a `app` directory and generate a file `index.js`.
 
@@ -57,7 +57,7 @@ node_modules
 npm-debug.log
 ```
 
-**2. Nginx Docker**
+## Nginx Docker
 ```sh
 server {
     location / {
@@ -79,7 +79,7 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 
 
 
-**3. Docker-Compose**
+## Docker-Compose
 
 This tool will allow us to start multiple containers with single command script. Moreover, it builds a common netwrok between containers for container-container communication.
 To generate this file, create an empty file in the main directory (outside `app` directory) and rename it to `docker-compose.yml`. This file will contain the configuration of each container and services. Detailed documentation can be find here [Link](https://docs.docker.com/compose/).
