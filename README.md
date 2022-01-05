@@ -6,7 +6,7 @@ This repository shows a simple demonstration of configuring docker compose servi
 [![](https://img.shields.io/badge/docs-stable-blue?style=for-the-badge)](https://mdsa3d.github.io/docker-compose-tutorial/)
 
 
-1. Test nodejs app
+# Test nodejs app
 
 To test the nodejs application, open the terminal and go to the `app` directory and run `index.js` file.
 
@@ -16,7 +16,7 @@ node index.js
 ```
 A nodejs server will be initialized at http://localhost:5000
 
-2. Run docker compose
+# Run docker compose
 
 This tool will allow us to start multiple containers with single command. To initiate the containers run following command:
 
