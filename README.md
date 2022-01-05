@@ -20,7 +20,8 @@ A nodejs server will be initialized at http://localhost:5000
 
 This tool will allow us to start multiple containers with single command. To initiate the containers run following command:
 
-*Linux (Ubuntu)*         `docker-compose up --build`
+*Linux (Ubuntu)*         `sudo docker-compose up --build` 
+
 *Windows*                `docker compose up --build`
 
 This should start your application at `http://localhost:80`.
