@@ -1,10 +1,10 @@
 # Docker Compose Tutorial
-This repository shows a simple demonstration of configuring docker compose service using nodejs app and nginx as reverse proxy.
 
 ![GitHub](https://img.shields.io/github/license/mdsa3d/docker-compose-tutorial?style=for-the-badge)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/mdsa3d/docker-compose-tutorial/pages%20build%20and%20deployment/gh-pages?style=for-the-badge)
 [![](https://img.shields.io/badge/docs-stable-blue?style=for-the-badge)](https://mdsa3d.github.io/docker-compose-tutorial/)
 
+This repository shows a simple demonstration of configuring docker compose service using nodejs app and nginx as reverse proxy.
 
 ## Test nodejs app
 
