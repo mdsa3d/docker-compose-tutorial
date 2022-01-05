@@ -22,7 +22,7 @@ To test the application you can open the terminal and run
 ```javascript
 node index.js
 ```
-A nodejs server is initialized at http://localhost:5000
+A nodejs server is initialized at [Link](http://localhost:5000)
 
 **Creating Dockerfile**
 A text file with image assembling instruction for docker.
@@ -82,7 +82,7 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 **3. Docker-Compose**
 
 This tool will allow us to start multiple containers with single command script. Moreover, it builds a common netwrok between containers for container-container communication.
-To generate this file, create an empty file in the main directory (outside `app` directory) and rename it to `docker-compose.yml`. This file will contain the configuration of each container and services. Detailed documentation can be find here `https://docs.docker.com/compose/`.
+To generate this file, create an empty file in the main directory (outside `app` directory) and rename it to `docker-compose.yml`. This file will contain the configuration of each container and services. Detailed documentation can be find here [Link](https://docs.docker.com/compose/).
 
 There are two containers being created in the below file, `nodeserver` which will run our application and `nginx` this will be the reverse proxy & load-balancer.
 Under each container we have `build` variable which will build the image using the dockerfile present in each directory (`app` and `nginx`). Second variable is `ports`, for nodeserver we are forwardign internal (docker) port 5000 to 80 and our nginx is listening on port 80 on both ends.  
@@ -109,4 +109,4 @@ Now, run the following command to start the containers:
 
 *Windows*                `docker compose up --build`
 
-This should start your application at `http://localhost:80`.
+This should start your application at [Link](http://localhost:80).
