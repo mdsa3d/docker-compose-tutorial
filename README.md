@@ -1,6 +1,8 @@
 # docker-compose-tutorial
 Docker Compose tutorial for nodejs app and nginx reverse_proxy
 
+https://img.shields.io/github/license/mdsa3d/docker-compose-tutorial?style=for-the-badge
+
 **1. NodeJS server**
 Create a `app` directory and generate a file `index.js`.
 
