@@ -1,37 +1,110 @@
-## Welcome to GitHub Pages
+# docker-compose-tutorial
+Docker Compose tutorial for nodejs app and nginx reverse_proxy
 
-You can use the [editor on GitHub](https://github.com/mdsa3d/docker-compose-tutorial/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+**1. NodeJS server**
+Create a `app` directory and generate a file `index.js`.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Contents of `index.js` 
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```javascript
+// index.js
+const express = require('express');
+const app = express();
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+app.listen(5000, () => console.log('Server is up and running'));
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+To test the application you can open the terminal and run 
 
-### Jekyll Themes
+```javascript
+node index.js
+```
+A nodejs server is initialized at http://localhost:5000
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mdsa3d/docker-compose-tutorial/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+**Creating Dockerfile**
+A text file with image assembling instruction for docker.
+Create a blank file in the `app` directory and named it `Dockerfile`, this will automatically change the filetype. Under Dockerfile insert the following context.
 
-### Support or Contact
+```Dockerfile
+# pull the Node.js Docker image
+FROM node:alpine
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+# create the directory inside the container
+WORKDIR /usr/src/app
+
+# copy the package.json files from local machine to the workdir in container
+COPY package*.json ./
+
+# run npm install in our local machine
+RUN npm install
+RUN npm install express
+# copy the generated modules and all other files to the container
+COPY . .
+
+# our app is running on port 5000 within the container, so need to expose it
+EXPOSE 5000
+
+# the command that starts our app
+CMD ["node", "index.js"]
+```
+
+In addition create `.dockerignore` file to speed up the docker build.
+```.dockerignore
+node_modules
+npm-debug.log
+```
+
+**2. Nginx Docker**
+```sh
+server {
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_pass http://nodeserver:5000;
+    }
+}
+```
+
+_Dockerfile_
+```Dockerfile
+FROM nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
+```
+
+
+
+**3.Docker-Compose**
+
+This tool will allow us to start multiple containers with single command script. Moreover, it builds a common netwrok between containers for container-container communication.
+To generate this file, create an empty file in the main directory (outside `app` directory) and rename it to `docker-compose.yml`. This file will contain the configuration of each container and services. Detailed documentation can be find here `https://docs.docker.com/compose/`.
+
+There are two containers being created in the below file, `nodeserver` which will run our application and `nginx` this will be the reverse proxy & load-balancer.
+Under each container we have `build` variable which will build the image using the dockerfile present in each directory (`app` and `nginx`). Second variable is `ports`, for nodeserver we are forwardign internal (docker) port 5000 to 80 and our nginx is listening on port 80 on both ends.  
+Docker-compose file:
+```yml
+version: "3.8"
+services:
+    nodeserver:
+        build:
+            context: ./app
+        ports:
+            - "5000:80"
+    nginx:
+        restart: always
+        build:
+            context: ./nginx
+        ports:
+            - "80:80"
+```
+
+Now, run the following command to start the containers:
+
+*Linux (Ubuntu)*         `docker-compose up --build`
+*Windows*                `docker compose up --build`
+
+This should start your application at `http://localhost:80`.
