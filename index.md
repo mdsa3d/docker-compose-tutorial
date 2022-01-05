@@ -1,4 +1,4 @@
-# docker-compose-tutorial
+# Docker Compose Tutorial
 Docker Compose tutorial for nodejs app and nginx reverse_proxy
 
 ## NodeJS server
